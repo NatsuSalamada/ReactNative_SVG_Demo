@@ -28,6 +28,7 @@ import { View, StyleSheet,Easing,TouchableOpacity,Text,Animated } from 'react-na
 import OvalLayer from "./OvalLayer";
 import TriangleLayer from "./TriangleLayer";
 import RectangleLayer from './RectangleLayer';
+import ArcLayer from "./ArcLayer";
 
 const AnimatedView = Animated.createAnimatedComponent(View)
 
@@ -62,7 +63,10 @@ class SVGScreen extends Component{
               { !this.state.is_hide_oval ? <OvalLayer onRef={ref => (this.oval_layer = ref)} spinAnimation = {() => {
                 this.spinAnimation()
               }}/> : null}
-              <RectangleLayer onRef={ref => (this.rectangle_layer = ref)}/>
+              <RectangleLayer onRef={ref => (this.rectangle_layer = ref)} arcAnimation = {() => {
+                this.arcAnimation()
+              }}/>
+              <ArcLayer onRef={ref => (this.arc_layer = ref)}/>
             
 
         </Svg>
@@ -71,8 +75,18 @@ class SVGScreen extends Component{
         
         <TouchableOpacity style = {{marginTop: 100, width: 200, height: 50, justifyContent:'center', alignItems:'center', backgroundColor:'pink'}}
         onPress = { () => {
-          this.oval_layer.oval_layer_start()
-          this.triangle_layer.anime()
+          if (this.state.is_hide_oval){
+            this.setState({
+              is_hide_oval: false
+            },() => {
+              this.oval_layer.oval_layer_start()
+              this.triangle_layer.anime()
+            } )
+          }else{
+            this.oval_layer.oval_layer_start()
+            this.triangle_layer.anime()
+          }
+          
         } } >
             <Text style = {{fontSize:20}} >Start Loading</Text>
          </TouchableOpacity>
@@ -94,6 +108,10 @@ class SVGScreen extends Component{
     ).start(() => {
       this.rectangle_layer.anime()
     })
+  }
+
+  arcAnimation = () => {
+    this.arc_layer.anime()
   }
 
 }

@@ -32,15 +32,15 @@ const rectangle_bottom_move = 'M 48 147.5 L 152 147.5'
 
 const rectangle_left_idle = 'M 150 149.5 L 150 149.5'
 
-const rectangle_left_move = 'M 150 149.5 L 150 60.5'
+const rectangle_left_move = 'M 150 149.5 L 150 58.5'
 
-const rectangle_top_idle = 'M 150 60.5 L 150 60.5'
+const rectangle_top_idle = 'M 152 60.5 L 152 60.5'
 
-const rectangle_top_move = 'M 150 60.5 L 50 60.5'
+const rectangle_top_move = 'M 152 60.5 L 48 60.5'
 
-const rectangle_right_idle = 'M 50 60.5 L 50 60.5'
+const rectangle_right_idle = 'M 50 58.5 L 50 58.5'
 
-const rectangle_right_move = 'M 50 60.5 L 50 147.5'
+const rectangle_right_move = 'M 50 58.5 L 50 148.5'
 
 const AnimatedRectangle = Animated.createAnimatedComponent(Path)
 class RectangleLayer extends Component{
@@ -136,7 +136,9 @@ class RectangleLayer extends Component{
                 easing: Easing.linear,
                 toValue: 1,
             })
-        ]).start()
+        ]).start(() => {
+            this.props.arcAnimation()
+        })
         
     }
 }
